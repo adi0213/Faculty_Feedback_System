@@ -102,16 +102,14 @@ def create_app() -> FastAPI:
     )
 
     # ── CORS ────────────────────────────────────────────────────────────────
-    cors_origins = settings.allowed_origins
-    allow_all = "*" in cors_origins
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"] if allow_all else cors_origins,
-        allow_credentials=not allow_all,
-        allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-        allow_headers=["Authorization", "Content-Type", "X-Request-ID", "X-API-Key"],
-        expose_headers=["X-Request-ID"],
-        max_age=600,
+        allow_origin_regex=r"https?://.*",
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+        expose_headers=["*"],
+        max_age=86400,
     )
 
     # ── Custom middleware (order: outermost first) ──────────────────────────

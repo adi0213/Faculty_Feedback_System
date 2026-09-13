@@ -22,12 +22,24 @@ const getHeaders = () => {
   };
 };
 
+const fetchWithRetry = async (url, options = {}, retries = 2, delayMs = 3000) => {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      return await fetch(url, options);
+    } catch (err) {
+      if (i === retries) throw err;
+      console.warn(`Fetch attempt ${i + 1} failed, retrying in ${delayMs}ms (waking up Render server)...`, err);
+      await new Promise((r) => setTimeout(r, delayMs));
+    }
+  }
+};
+
 export const DB = {
   // ── Authentication ──────────────────────────────────────────────────────────
   login: async (email, password) => {
     const baseUrl = getApiUrl();
     try {
-      const res = await fetch(`${baseUrl}/auth/login`, {
+      const res = await fetchWithRetry(`${baseUrl}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -40,7 +52,7 @@ export const DB = {
       localStorage.setItem('edupulse_token', data.access_token);
 
       // Fetch authenticated user profile
-      const meRes = await fetch(`${baseUrl}/auth/me`, { headers: getHeaders() });
+      const meRes = await fetchWithRetry(`${baseUrl}/auth/me`, { headers: getHeaders() });
       if (!meRes.ok) throw new Error('Failed to fetch user profile.');
       const user = await meRes.json();
 
@@ -49,7 +61,7 @@ export const DB = {
     } catch (e) {
       console.error('Login error:', e);
       if (e.name === 'TypeError' || e.message.includes('fetch') || e.message.includes('NetworkError') || e.message.includes('Failed to fetch')) {
-        throw new Error(`Backend server is offline or unreachable at ${baseUrl}. Please ensure the backend server is running.`);
+        throw new Error(`Backend server is spinning up or unreachable at ${baseUrl}. Please wait 15-30 seconds if server is waking up, then try again.`);
       }
       throw e;
     }
