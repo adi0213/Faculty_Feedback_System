@@ -1,14 +1,14 @@
-# Render deployment configuration
-# See https://render.com/docs/yaml-spec
+# render.yaml — EduPulse AI Full-Stack Deployment
+# Docs: https://render.com/docs/yaml-spec
 
 services:
-  # ── Backend API ─────────────────────────────────────────────────────────────
+  # ── Backend API (Docker) ─────────────────────────────────────────────────────
   - type: web
     name: edupulse-backend
-    runtime: python
-    rootDir: edupulse-backend-v2
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    runtime: docker
+    dockerfilePath: ./Dockerfile        # Root-level Dockerfile
+    dockerContext: .                     # Repo root as build context
+    plan: free
     envVars:
       - key: APP_ENV
         value: production
@@ -21,33 +21,45 @@ services:
           name: edupulse-db
           property: connectionString
       - key: LLM_ENABLED
-        value: "true"
+        value: "false"                   # Set to true once you add your OpenAI key
+      - key: LLM_MODEL
+        value: gpt-4o-mini
       - key: OPENAI_API_KEY
-        sync: false   # Set manually in Render dashboard
+        sync: false                      # Set manually in Render dashboard
       - key: K_ANONYMITY_THRESHOLD
         value: "5"
+      - key: REDIS_URL
+        value: redis://localhost:6379/0  # Optional — rate limiting falls back gracefully
       - key: LOG_LEVEL
         value: INFO
       - key: LOG_FORMAT
         value: json
+      - key: APP_ALLOWED_ORIGINS
+        value: https://edupulse-frontend.onrender.com,http://localhost:5173
+      - key: SCORING_ALPHA
+        value: "0.70"
+      - key: SCORING_BAYES_K
+        value: "8"
+      - key: JWT_ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
     healthCheckPath: /health
 
-  # ── Frontend ─────────────────────────────────────────────────────────────────
+  # ── Frontend (Static Site) ───────────────────────────────────────────────────
   - type: web
     name: edupulse-frontend
     runtime: static
-    rootDir: edupulse-react
-    buildCommand: npm install && npm run build
-    staticPublishPath: dist
+    buildCommand: cd edupulse-react && npm install && npm run build
+    staticPublishPath: ./edupulse-react/dist
+    pullRequestPreviewsEnabled: false
     envVars:
       - key: VITE_API_BASE_URL
         value: https://edupulse-backend.onrender.com/api/v2
     routes:
       - type: rewrite
         source: /*
-        destination: /index.html
+        destination: /index.html        # SPA routing fallback
 
-# ── Database ──────────────────────────────────────────────────────────────────
+# ── PostgreSQL Database ────────────────────────────────────────────────────────
 databases:
   - name: edupulse-db
     databaseName: edupulse_v2

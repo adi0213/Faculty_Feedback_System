@@ -1,0 +1,41 @@
+# Docker build context exclusions — keeps image lean
+
+# Node.js (frontend — not needed in backend image)
+edupulse-react/node_modules
+edupulse-react/dist
+
+# Python caches
+**/__pycache__
+**/*.py[cod]
+**/*.egg-info
+**/.pytest_cache
+
+# SQLite databases (runtime created)
+**/*.db
+**/*.db-shm
+**/*.db-wal
+
+# Uploaded files (runtime created)
+edupulse-backend-v2/uploads/
+
+# Secrets
+**/.env
+**/.env.local
+
+# Git
+.git
+.gitignore
+
+# Docs and extras
+*.md
+*.pdf
+*.docx
+blueprint.md
+implementation_plan.md
+walkthrough.md
+convert_to_pdf.py
+EduPulse_Documentation.html
+
+# IDE
+.vscode
+.idea
