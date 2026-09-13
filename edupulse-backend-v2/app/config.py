@@ -27,7 +27,7 @@ class Settings(BaseSettings):
         default="change-me-in-production-minimum-32-characters",
         min_length=32,
     )
-    app_allowed_origins: str = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000"
+    app_allowed_origins: str = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000,*"
 
     @property
     def allowed_origins(self) -> list[str]:
