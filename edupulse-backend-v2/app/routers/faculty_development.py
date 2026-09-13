@@ -109,7 +109,7 @@ async def complete_course(
             CourseCompletion.faculty_profile_id == faculty.id
         )
     )
-    current_boost = total_res.scalar() or 0.0
+    current_boost = float(total_res.scalar() or 0.0)
     if current_boost >= MAX_TOTAL_BOOST:
         boost = 0.0  # Already at cap — still mark as complete
     else:
@@ -152,7 +152,7 @@ async def complete_course(
         "dimension_id": dimension_id,
         "certificate_url": cert_url,
         "score_boost": boost,
-        "total_boost_earned": round(current_boost + boost, 2),
+        "total_boost_earned": round(float(current_boost + boost), 2),
         "max_boost": MAX_TOTAL_BOOST,
         "completed_at": completion.completed_at.isoformat(),
     }
@@ -173,7 +173,7 @@ async def list_completed_courses(
     )
     completions = result.scalars().all()
 
-    total_boost = round(sum(c.score_boost for c in completions), 2)
+    total_boost = round(float(sum(float(c.score_boost) for c in completions)), 2) if completions else 0.0
 
     return {
         "faculty_id": faculty.id,
