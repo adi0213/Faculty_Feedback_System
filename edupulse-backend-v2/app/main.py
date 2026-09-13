@@ -35,7 +35,22 @@ async def lifespan(app: FastAPI):
     _configure_logging()
     logger.info("EduPulse API starting (env=%s, llm_enabled=%s)", settings.app_env, settings.llm_enabled)
 
-    # Pre-warm RAG engine at startup
+    # ── Auto-initialize DB schemas and tables if missing ─────────────────────
+    try:
+        import app.models  # Register all ORM models with Base
+        from app.db.session import engine, Base
+        from sqlalchemy import text
+
+        async with engine.begin() as conn:
+            if engine.dialect.name != "sqlite":
+                await conn.execute(text("CREATE SCHEMA IF NOT EXISTS registry"))
+                await conn.execute(text("CREATE SCHEMA IF NOT EXISTS feedback"))
+            await conn.run_sync(Base.metadata.create_all)
+        logger.info("Database schemas and tables initialized successfully")
+    except Exception as e:
+        logger.warning("Database schema auto-creation failed: %s", e)
+
+    # ── Pre-warm RAG engine at startup ───────────────────────────────────────
     try:
         from app.ai.rag_engine import get_rag_engine
         get_rag_engine()
@@ -66,10 +81,12 @@ def create_app() -> FastAPI:
     )
 
     # ── CORS ────────────────────────────────────────────────────────────────
+    cors_origins = settings.allowed_origins
+    allow_all = "*" in cors_origins
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.allowed_origins,
-        allow_credentials=True,
+        allow_origins=["*"] if allow_all else cors_origins,
+        allow_credentials=not allow_all,
         allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         allow_headers=["Authorization", "Content-Type", "X-Request-ID", "X-API-Key"],
         expose_headers=["X-Request-ID"],
