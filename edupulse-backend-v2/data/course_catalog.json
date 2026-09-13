@@ -1,0 +1,362 @@
+[
+  {
+    "title": "Effective Teaching: Explanation and Concept Clarity",
+    "provider": "NPTEL",
+    "institution": "IIT Madras",
+    "url": "https://nptel.ac.in/courses/109106148",
+    "description": "Techniques for explaining complex concepts clearly using analogies, examples, and structured delivery. Covers pedagogical principles for higher education.",
+    "duration_weeks": 8,
+    "duration_label": "8 weeks",
+    "primary_dimension": "clarity",
+    "secondary_dimensions": ["methodology", "engagement"],
+    "level": "intermediate",
+    "category": "Pedagogy",
+    "learning_outcomes": [
+      "Design clear, well-structured explanations for complex topics",
+      "Use analogies and examples to improve concept retention",
+      "Apply Bloom's taxonomy to sequence teaching content"
+    ]
+  },
+  {
+    "title": "Innovative Pedagogy for Engineering Education",
+    "provider": "NPTEL",
+    "institution": "IIT Bombay",
+    "url": "https://nptel.ac.in/courses/109101049",
+    "description": "Modern teaching methodologies including active learning, problem-based learning, flipped classroom, and technology integration for engineering faculty.",
+    "duration_weeks": 12,
+    "duration_label": "12 weeks",
+    "primary_dimension": "methodology",
+    "secondary_dimensions": ["engagement", "clarity"],
+    "level": "intermediate",
+    "category": "Pedagogy",
+    "learning_outcomes": [
+      "Design flipped classroom modules for technical subjects",
+      "Implement problem-based learning in engineering courses",
+      "Integrate technology tools for active student participation"
+    ]
+  },
+  {
+    "title": "Curriculum Design and Development",
+    "provider": "NPTEL",
+    "institution": "IIT Madras",
+    "url": "https://nptel.ac.in/courses/109106148",
+    "description": "Principles of outcome-based curriculum design, learning objective framing, content sequencing, and alignment with national educational standards.",
+    "duration_weeks": 8,
+    "duration_label": "8 weeks",
+    "primary_dimension": "pacing",
+    "secondary_dimensions": ["methodology", "assessment"],
+    "level": "beginner",
+    "category": "Curriculum",
+    "learning_outcomes": [
+      "Write measurable learning outcomes aligned to Bloom's taxonomy",
+      "Design course content with appropriate scope and sequencing",
+      "Map assessments to learning objectives for coherent curriculum"
+    ]
+  },
+  {
+    "title": "Active Learning: Engaging Students in the Classroom",
+    "provider": "SWAYAM",
+    "institution": "UGC",
+    "url": "https://swayam.gov.in/nd1_noc19_hs37",
+    "description": "Strategies for fostering active student participation through think-pair-share, case studies, simulations, and collaborative techniques.",
+    "duration_weeks": 4,
+    "duration_label": "4 weeks",
+    "primary_dimension": "engagement",
+    "secondary_dimensions": ["methodology", "approachability"],
+    "level": "beginner",
+    "category": "Pedagogy",
+    "learning_outcomes": [
+      "Design activities that promote student engagement and discussion",
+      "Apply think-pair-share and peer instruction techniques",
+      "Assess active learning effectiveness through formative methods"
+    ]
+  },
+  {
+    "title": "Assessment and Evaluation in Higher Education",
+    "provider": "SWAYAM",
+    "institution": "UGC",
+    "url": "https://swayam.gov.in/nd1_noc19_hs36",
+    "description": "Comprehensive guide to designing valid, reliable, and fair assessments including rubrics, formative assessment, feedback strategies, and grading transparency.",
+    "duration_weeks": 6,
+    "duration_label": "6 weeks",
+    "primary_dimension": "fairness",
+    "secondary_dimensions": ["assessment", "approachability"],
+    "level": "intermediate",
+    "category": "Assessment",
+    "learning_outcomes": [
+      "Design clear rubrics for transparent and consistent grading",
+      "Implement formative assessment to guide student learning",
+      "Provide timely, constructive feedback on student work"
+    ]
+  },
+  {
+    "title": "Time Management and Academic Planning for Educators",
+    "provider": "SWAYAM",
+    "institution": "UGC",
+    "url": "https://swayam.gov.in/nd1_noc20_mg07",
+    "description": "Strategies for planning semester schedules, managing syllabus delivery timelines, and ensuring complete, balanced course coverage without last-minute rushing.",
+    "duration_weeks": 4,
+    "duration_label": "4 weeks",
+    "primary_dimension": "pacing",
+    "secondary_dimensions": ["punctuality"],
+    "level": "beginner",
+    "category": "Professional Development",
+    "learning_outcomes": [
+      "Create semester-long delivery plans with buffer time built in",
+      "Identify time-intensive topics for proactive planning",
+      "Use backward planning to ensure full syllabus coverage"
+    ]
+  },
+  {
+    "title": "Communication Skills for Technical Educators",
+    "provider": "NPTEL",
+    "institution": "IIT Kharagpur",
+    "url": "https://nptel.ac.in/courses/109105122",
+    "description": "Effective verbal and non-verbal communication for classroom settings. Covers questioning techniques, listening, empathy, and student-centered communication.",
+    "duration_weeks": 8,
+    "duration_label": "8 weeks",
+    "primary_dimension": "approachability",
+    "secondary_dimensions": ["clarity", "engagement"],
+    "level": "beginner",
+    "category": "Communication",
+    "learning_outcomes": [
+      "Use Socratic questioning to stimulate higher-order thinking",
+      "Demonstrate active listening and empathetic response techniques",
+      "Build a supportive, approachable classroom climate"
+    ]
+  },
+  {
+    "title": "Effective Engineering Pedagogy",
+    "provider": "NPTEL",
+    "institution": "IIT Madras",
+    "url": "https://nptel.ac.in/courses/109106148",
+    "description": "Specialized pedagogy for engineering educators: problem decomposition, laboratory teaching, concept mapping, and connecting theory to practice.",
+    "duration_weeks": 8,
+    "duration_label": "8 weeks",
+    "primary_dimension": "methodology",
+    "secondary_dimensions": ["clarity", "practical"],
+    "level": "intermediate",
+    "category": "Pedagogy",
+    "learning_outcomes": [
+      "Design problem decomposition exercises that build analytical skills",
+      "Create effective laboratory sessions tied to theory",
+      "Use concept maps to reveal and address misconceptions"
+    ]
+  },
+  {
+    "title": "Blended Learning: Personalising Education",
+    "provider": "NPTEL",
+    "institution": "IIT Bombay",
+    "url": "https://nptel.ac.in/courses/109101049",
+    "description": "How to design and deliver hybrid courses that combine online self-paced content with face-to-face interaction for maximum flexibility and engagement.",
+    "duration_weeks": 6,
+    "duration_label": "6 weeks",
+    "primary_dimension": "methodology",
+    "secondary_dimensions": ["engagement", "pacing"],
+    "level": "intermediate",
+    "category": "Technology",
+    "learning_outcomes": [
+      "Design blended learning modules with clear online/offline components",
+      "Select appropriate digital tools for each learning objective",
+      "Measure engagement and adjust content delivery in real time"
+    ]
+  },
+  {
+    "title": "Outcome-Based Education (OBE) for Higher Education",
+    "provider": "AICTE",
+    "institution": "AICTE",
+    "url": "https://www.aicte-india.org/education/training",
+    "description": "National framework for OBE implementation: writing attainment levels, mapping COs to POs/PSOs, calculating attainment, and using data for continuous improvement.",
+    "duration_weeks": 6,
+    "duration_label": "6 weeks",
+    "primary_dimension": "assessment",
+    "secondary_dimensions": ["fairness", "methodology"],
+    "level": "intermediate",
+    "category": "Accreditation",
+    "learning_outcomes": [
+      "Write course outcomes (COs) aligned to program outcomes (POs)",
+      "Calculate CO and PO attainment from assessment data",
+      "Use attainment analysis for course improvement decisions"
+    ]
+  },
+  {
+    "title": "Mindfulness and Emotional Intelligence for Educators",
+    "provider": "SWAYAM",
+    "institution": "UGC",
+    "url": "https://swayam.gov.in/nd1_noc19_hs38",
+    "description": "Developing emotional regulation, empathy, and mindful awareness to create a positive classroom climate and manage stress effectively.",
+    "duration_weeks": 4,
+    "duration_label": "4 weeks",
+    "primary_dimension": "approachability",
+    "secondary_dimensions": ["engagement", "fairness"],
+    "level": "beginner",
+    "category": "Professional Development",
+    "learning_outcomes": [
+      "Apply mindfulness techniques to reduce classroom stress",
+      "Develop empathetic responses to diverse student needs",
+      "Build emotional resilience for long-term educator wellbeing"
+    ]
+  },
+  {
+    "title": "Question Design and Higher-Order Thinking",
+    "provider": "NPTEL",
+    "institution": "IIT Delhi",
+    "url": "https://nptel.ac.in/courses/109102118",
+    "description": "Designing questions that promote critical thinking, analysis, and synthesis rather than mere recall. Covers Bloom's revised taxonomy and Webb's Depth of Knowledge.",
+    "duration_weeks": 4,
+    "duration_label": "4 weeks",
+    "primary_dimension": "assessment",
+    "secondary_dimensions": ["clarity", "methodology"],
+    "level": "beginner",
+    "category": "Assessment",
+    "learning_outcomes": [
+      "Write exam questions at each Bloom's taxonomy level",
+      "Design case-based questions for engineering problem-solving",
+      "Evaluate question quality using item analysis techniques"
+    ]
+  },
+  {
+    "title": "Research Methodology for Engineering Faculty",
+    "provider": "NPTEL",
+    "institution": "IIT Roorkee",
+    "url": "https://nptel.ac.in/courses/109107085",
+    "description": "Fundamentals of research design, literature review, data collection, statistical analysis, and academic writing for engineering educators.",
+    "duration_weeks": 12,
+    "duration_label": "12 weeks",
+    "primary_dimension": "practical",
+    "secondary_dimensions": ["methodology"],
+    "level": "intermediate",
+    "category": "Research",
+    "learning_outcomes": [
+      "Design rigorous experimental or survey-based research studies",
+      "Apply appropriate statistical methods to research data",
+      "Write publishable-quality research papers"
+    ]
+  },
+  {
+    "title": "Use of ICT in Education",
+    "provider": "SWAYAM",
+    "institution": "UGC",
+    "url": "https://swayam.gov.in/nd1_noc19_hs40",
+    "description": "Integrating ICT tools — LMS, simulations, virtual labs, multimedia — into teaching for improved accessibility and interactivity.",
+    "duration_weeks": 6,
+    "duration_label": "6 weeks",
+    "primary_dimension": "methodology",
+    "secondary_dimensions": ["engagement", "practical"],
+    "level": "beginner",
+    "category": "Technology",
+    "learning_outcomes": [
+      "Set up and use a Learning Management System (LMS) effectively",
+      "Create multimedia teaching content for hybrid delivery",
+      "Evaluate and select ICT tools appropriate for specific learning goals"
+    ]
+  },
+  {
+    "title": "Classroom Management and Student Discipline",
+    "provider": "SWAYAM",
+    "institution": "UGC",
+    "url": "https://swayam.gov.in/nd1_noc19_hs41",
+    "description": "Evidence-based classroom management strategies: establishing norms, handling disruptions, building respect, and maintaining a productive learning environment.",
+    "duration_weeks": 4,
+    "duration_label": "4 weeks",
+    "primary_dimension": "engagement",
+    "secondary_dimensions": ["approachability", "punctuality"],
+    "level": "beginner",
+    "category": "Classroom Management",
+    "learning_outcomes": [
+      "Establish clear classroom expectations and norms from day one",
+      "Use positive reinforcement and restorative practices",
+      "Manage disruptions calmly without undermining student dignity"
+    ]
+  },
+  {
+    "title": "Inclusive Education for Diverse Learners",
+    "provider": "SWAYAM",
+    "institution": "UGC",
+    "url": "https://swayam.gov.in/nd1_noc19_hs42",
+    "description": "Strategies for teaching diverse student populations including first-generation learners, students with disabilities, and varying language backgrounds.",
+    "duration_weeks": 6,
+    "duration_label": "6 weeks",
+    "primary_dimension": "fairness",
+    "secondary_dimensions": ["approachability", "methodology"],
+    "level": "beginner",
+    "category": "Inclusive Education",
+    "learning_outcomes": [
+      "Apply Universal Design for Learning (UDL) principles",
+      "Adapt teaching materials for students with diverse needs",
+      "Create assessment alternatives that are equally rigorous"
+    ]
+  },
+  {
+    "title": "Mentoring and Advising Students in Higher Education",
+    "provider": "SWAYAM",
+    "institution": "UGC",
+    "url": "https://swayam.gov.in/nd1_noc20_hs09",
+    "description": "Building effective mentoring relationships: active listening, goal setting, academic advising, and supporting student career development.",
+    "duration_weeks": 4,
+    "duration_label": "4 weeks",
+    "primary_dimension": "approachability",
+    "secondary_dimensions": ["fairness", "engagement"],
+    "level": "beginner",
+    "category": "Student Support",
+    "learning_outcomes": [
+      "Build trust-based mentoring relationships with students",
+      "Conduct structured advising conversations that achieve results",
+      "Recognize and respond to student distress signals appropriately"
+    ]
+  },
+  {
+    "title": "Statistical Methods for Data Analysis",
+    "provider": "NPTEL",
+    "institution": "IIT Kanpur",
+    "url": "https://nptel.ac.in/courses/111104079",
+    "description": "Probability, descriptive and inferential statistics, hypothesis testing, regression analysis, and ANOVA for engineering and science faculty.",
+    "duration_weeks": 12,
+    "duration_label": "12 weeks",
+    "primary_dimension": "practical",
+    "secondary_dimensions": ["methodology"],
+    "level": "intermediate",
+    "category": "Subject Expertise",
+    "learning_outcomes": [
+      "Apply hypothesis testing to real-world engineering datasets",
+      "Interpret regression analysis results correctly",
+      "Design experiments using ANOVA and factorial methods"
+    ]
+  },
+  {
+    "title": "Feedback and Reflective Practice for Teachers",
+    "provider": "NPTEL",
+    "institution": "IIT Madras",
+    "url": "https://nptel.ac.in/courses/109106149",
+    "description": "Using student feedback constructively for professional growth. Covers reflection frameworks, action research, peer observation, and evidence-based improvement cycles.",
+    "duration_weeks": 4,
+    "duration_label": "4 weeks",
+    "primary_dimension": "overall",
+    "secondary_dimensions": ["methodology", "engagement"],
+    "level": "beginner",
+    "category": "Professional Development",
+    "learning_outcomes": [
+      "Interpret student feedback data to identify actionable improvement areas",
+      "Design a personal professional development action plan",
+      "Conduct action research cycles to test and refine teaching practices"
+    ]
+  },
+  {
+    "title": "Course Planning and Syllabus Management",
+    "provider": "AICTE",
+    "institution": "AICTE",
+    "url": "https://www.aicte-india.org/education/training",
+    "description": "Practical tools for mapping syllabus to academic calendar, building weekly lesson plans, tracking coverage, and managing unexpected schedule disruptions.",
+    "duration_weeks": 3,
+    "duration_label": "3 weeks",
+    "primary_dimension": "pacing",
+    "secondary_dimensions": ["punctuality", "methodology"],
+    "level": "beginner",
+    "category": "Professional Development",
+    "learning_outcomes": [
+      "Build a complete semester lesson plan before the first class",
+      "Identify and prioritize essential vs. supplementary topics",
+      "Create contingency plans for schedule disruptions"
+    ]
+  }
+]

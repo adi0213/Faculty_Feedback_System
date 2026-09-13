@@ -1,0 +1,96 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+  margin-left: 244px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 220ms ease;
+}
+
+.topbar {
+  height: 62px;
+  background: rgba(249,245,238,.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(13,31,30,.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 0 rgba(13,31,30,.04), 0 2px 12px rgba(13,31,30,.05);
+}
+
+.menuBtn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 140ms;
+}
+.menuBtn:hover { background: rgba(13,31,30,.06); }
+.menuBtn span {
+  display: block;
+  width: 20px; height: 2px;
+  background: #4A5E5A;
+  border-radius: 2px;
+  transition: all 140ms;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.termBadge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: #2E6B60;
+  background: rgba(74,144,136,.1);
+  border: 1px solid rgba(74,144,136,.18);
+  border-radius: 9999px;
+  padding: 4px 12px;
+}
+
+.main {
+  flex: 1;
+  padding: 28px 28px 64px;
+  background: var(--parchment-200, #F2EDE2);
+}
+
+/* Loader */
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #F2EDE2;
+}
+
+.loaderSpinner {
+  width: 36px; height: 36px;
+  border: 3px solid rgba(46,107,96,.15);
+  border-top-color: #2E6B60;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .content { margin-left: 0; }
+  .menuBtn { display: flex; }
+  .main { padding: 20px 16px 48px; }
+}

@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ══════════════════════════════════════════
+   EDUPULSE — Design System
+   Skeuomorphism × Bento Grid Blend
+   ══════════════════════════════════════════ */
+
+:root {
+  /* ── Color Palette ── */
+  --teal-950: #040F0F;
+  --teal-900: #0A1C1C;
+  --teal-800: #0D2B2B;
+  --teal-700: #1B4040;
+  --teal-600: #1E5252;
+  --teal-500: #2E6B60;
+  --teal-400: #4A9088;
+  --teal-300: #7ABDB7;
+  --teal-200: #B0DAD6;
+  --teal-100: #D4ECE9;
+  --teal-50:  #EBF5F3;
+
+  --gold-600: #A07030;
+  --gold-500: #C9954A;
+  --gold-400: #DFB060;
+  --gold-300: #E8C07A;
+  --gold-200: #F0D4A0;
+  --gold-100: #F5E5C8;
+  --gold-50:  #FBF4E5;
+
+  --parchment-100: #F9F5EE;
+  --parchment-200: #F2EDE2;
+  --parchment-300: #E8E2D4;
+  --parchment-400: #D9D2C0;
+
+  --ink-900: #0D1F1E;
+  --ink-700: #2C3D3C;
+  --ink-500: #4A5E5A;
+  --ink-300: #8A9E99;
+  --ink-100: #C5D0CE;
+
+  --strong-800: #0F4A2A;
+  --strong-500: #1E6F4A;
+  --strong-200: #B0E8CC;
+  --strong-50:  #E0F5EB;
+
+  --amber-700: #9C7423;
+  --amber-50:  #F3E9D3;
+
+  --red-700: #9A3C2C;
+  --red-50:  #F4DDD8;
+
+  /* ── Shadows (Skeuomorphic) ── */
+  --shadow-inset:   inset 0 2px 5px rgba(0,0,0,.12), inset 0 1px 2px rgba(0,0,0,.08);
+  --shadow-inset-sm:inset 0 1px 3px rgba(0,0,0,.10);
+  --shadow-xs:  0 1px 2px rgba(13,31,30,.06), 0 0 1px rgba(13,31,30,.04);
+  --shadow-sm:  0 2px 8px rgba(13,31,30,.08), 0 1px 2px rgba(13,31,30,.05);
+  --shadow-md:  0 4px 18px rgba(13,31,30,.11), 0 2px 6px rgba(13,31,30,.07);
+  --shadow-lg:  0 8px 36px rgba(13,31,30,.14), 0 3px 10px rgba(13,31,30,.08);
+  --shadow-xl:  0 16px 64px rgba(13,31,30,.18), 0 6px 20px rgba(13,31,30,.10);
+  --shadow-gold:0 4px 24px rgba(201,149,74,.35);
+
+  /* ── Radii ── */
+  --r-xs:  4px;
+  --r-sm:  8px;
+  --r-md:  12px;
+  --r-lg:  18px;
+  --r-xl:  24px;
+  --r-2xl: 32px;
+  --r-full: 9999px;
+
+  /* ── Typography ── */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans:  'Inter', -apple-system, sans-serif;
+  --font-mono:  'JetBrains Mono', 'Courier New', monospace;
+
+  /* ── Transitions ── */
+  --ease-out: cubic-bezier(.25,.46,.45,.94);
+  --ease-bounce: cubic-bezier(.175,.885,.32,1.275);
+  --t-fast: 120ms;
+  --t-mid:  220ms;
+  --t-slow: 380ms;
+
+  /* ── Layout ── */
+  --sidebar-w: 244px;
+  --topbar-h: 62px;
+}
+
+/* ── Global Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-900);
+  background: var(--parchment-200);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Subtle paper grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.028'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9998;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: var(--font-sans); border: none; background: none; }
+input, textarea, select { font-family: var(--font-sans); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--parchment-300); }
+::-webkit-scrollbar-thumb { background: var(--teal-400); border-radius: var(--r-full); }
+
+/* ── Selection ── */
+::selection { background: rgba(74,144,136,.25); color: var(--ink-900); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}

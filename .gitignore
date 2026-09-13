@@ -1,0 +1,76 @@
+# Root-level .gitignore — covers both backend and frontend
+
+# ── Secrets / Environment ──────────────────────────────────────────────────────
+.env
+*.env
+.env.local
+.env.production
+.env.*.local
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+*.xml
+
+# ── SQLite databases (seed data is in seed_v2.py) ─────────────────────────────
+*.db
+*.db-shm
+*.db-wal
+
+# ── Uploaded files ─────────────────────────────────────────────────────────────
+edupulse-backend-v2/uploads/certificates/*.pdf
+edupulse-backend-v2/uploads/certificates/*.jpg
+edupulse-backend-v2/uploads/certificates/*.png
+
+# ── Node / Frontend ────────────────────────────────────────────────────────────
+node_modules/
+dist/
+dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── IDE / OS ──────────────────────────────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.suo
+*.sw?
+
+# ── Misc ──────────────────────────────────────────────────────────────────────
+*.log
+*.pdf
+convert_to_pdf.py
+EduPulse_Documentation.html

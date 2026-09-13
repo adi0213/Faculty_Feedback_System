@@ -1,0 +1,24 @@
+.flagStrip { border-left: 3px solid #9A3C2C; padding: 10px 14px; background: #FDFAF4; border-radius: 0 10px 10px 0; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(13,31,30,.06); }
+.flagStripLow { border-left-color: #C9954A; }
+.flagLow { display:inline-block;padding:1px 6px;background:#F3E9D3;color:#9C7423;border-radius:4px;font-size:9.5px;font-weight:700;margin-left:4px;vertical-align:middle; }
+
+.detailBtn { padding:5px 12px;background:linear-gradient(145deg,#F2EDE2,#E8E2D4);border:1px solid rgba(13,31,30,.1);border-radius:8px;font-size:12px;font-weight:600;color:#2E6B60;cursor:pointer;transition:all 140ms; }
+.detailBtn:hover { background:rgba(74,144,136,.1);border-color:rgba(74,144,136,.22); }
+
+/* Mini bar */
+.miniBar { display:flex;align-items:center;gap:10px;margin-bottom:9px; }
+.miniLabel { width:100px;font-size:12px;color:#4A5E5A;text-transform:capitalize;flex-shrink:0; }
+.miniTrack { flex:1;height:5px;background:rgba(13,31,30,.08);border-radius:9999px;box-shadow:inset 0 1px 2px rgba(13,31,30,.1);overflow:hidden; }
+.miniFill  { height:100%;border-radius:9999px;transition:width .7s ease; }
+.miniScore { width:32px;font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;text-align:right;flex-shrink:0; }
+
+/* Modal */
+.modalOverlay { position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px); }
+.modal { background:#FDFAF4;border-radius:22px;padding:28px;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:fadeSlideUp .28s both;position:relative;border:1px solid rgba(13,31,30,.08); }
+@keyframes fadeSlideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.modalClose { position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;background:#F2EDE2;border:1px solid rgba(13,31,30,.1);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 140ms;color:#4A5E5A; }
+.modalClose:hover { background:#F4DDD8;color:#9A3C2C; }
+.modalHeader { display:flex;align-items:center;gap:12px;margin-bottom:16px; }
+.modalAvatar { width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#2E6B60,#0D2B2B);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0; }
+.modalName { font-size:16px;font-weight:700;color:#0D1F1E; }
+.modalMeta { font-size:11px;color:#8A9E99;font-family:'JetBrains Mono',monospace;margin-top:2px; }

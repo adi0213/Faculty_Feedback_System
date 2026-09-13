@@ -1,0 +1,133 @@
+.card {
+  position: relative;
+  background: #FDFAF4;
+  border: 1px solid rgba(13,31,30,.08);
+  border-radius: 18px;
+  padding: 20px 22px;
+  overflow: hidden;
+  transition: box-shadow 220ms cubic-bezier(.25,.46,.45,.94), transform 220ms cubic-bezier(.25,.46,.45,.94);
+  /* Skeuomorphic layered shadow */
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 -1px 0 rgba(13,31,30,.06) inset,
+    0 2px 8px rgba(13,31,30,.07),
+    0 1px 2px rgba(13,31,30,.05);
+}
+
+/* Top highlight line */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 5%, rgba(255,255,255,.95) 40%, rgba(255,255,255,.95) 60%, transparent 95%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Inner light gradient */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(255,255,255,.55) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.hoverable:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 -1px 0 rgba(13,31,30,.06) inset,
+    0 6px 24px rgba(13,31,30,.11),
+    0 2px 6px rgba(13,31,30,.07);
+}
+
+/* Variants */
+.dark {
+  background: linear-gradient(145deg, #0D2B2B, #081A1A);
+  border-color: rgba(255,255,255,.06);
+  color: #fff;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.06) inset,
+    0 8px 36px rgba(0,0,0,.25),
+    0 3px 10px rgba(0,0,0,.18);
+}
+.dark::before { background: linear-gradient(90deg, transparent 5%, rgba(255,255,255,.08) 50%, transparent 95%); }
+.dark::after  { background: linear-gradient(160deg, rgba(255,255,255,.06) 0%, transparent 55%); }
+
+.gold {
+  background: linear-gradient(145deg, #FBF4E5, #F5E8CC);
+  border-color: rgba(201,149,74,.22);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 -1px 0 rgba(201,149,74,.12) inset,
+    0 4px 18px rgba(201,149,74,.14),
+    0 1px 4px rgba(13,31,30,.06);
+}
+
+.teal {
+  background: linear-gradient(145deg, #EBF5F3, #DCF0EC);
+  border-color: rgba(74,144,136,.18);
+}
+
+.raised {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.95) inset,
+    0 -1px 0 rgba(13,31,30,.07) inset,
+    0 6px 24px rgba(13,31,30,.12),
+    0 2px 6px rgba(13,31,30,.08);
+}
+
+.flat {
+  box-shadow: none;
+  border: 1px solid rgba(13,31,30,.1);
+}
+.flat:hover { box-shadow: 0 2px 8px rgba(13,31,30,.08); transform: none; }
+
+/* Card header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(13,31,30,.07);
+  position: relative;
+  z-index: 3;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.headerIcon {
+  font-size: 14px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(74,144,136,.1);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.headerTitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: #4A5E5A;
+}
+
+.headerAction {
+  flex-shrink: 0;
+}
+
+/* Children above pseudo-elements */
+.card > * { position: relative; z-index: 3; }
