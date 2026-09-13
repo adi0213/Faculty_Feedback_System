@@ -40,12 +40,16 @@ class Settings(BaseSettings):
 
     @property
     def async_database_url(self) -> str:
-        """Ensure asyncpg driver prefix for PostgreSQL URLs (Render gives plain postgresql://)."""
+        """Ensure asyncpg driver prefix for PostgreSQL URLs and safe path for SQLite."""
         url = self.database_url
         if url.startswith("postgresql://"):
             url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
         elif url.startswith("postgres://"):   # Some providers use this alias
             url = url.replace("postgres://", "postgresql+asyncpg://", 1)
+        elif url.startswith("sqlite") and ("./" in url or "edupulse_v2.db" in url):
+            # In Docker containers, current working directory may be read-only for non-root user.
+            if not os.access(".", os.W_OK):
+                url = "sqlite+aiosqlite:////tmp/edupulse_v2.db"
         return url
 
     @property

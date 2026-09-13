@@ -39,7 +39,7 @@ COPY --chown=edupulse:edupulse edupulse-backend-v2/ .
 
 # Pre-create writable directories as edupulse user
 RUN mkdir -p uploads/certificates /tmp/edupulse/uploads/certificates \
-    && chown -R edupulse:edupulse uploads /tmp/edupulse
+    && chown -R edupulse:edupulse /app /tmp/edupulse
 
 USER edupulse
 

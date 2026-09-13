@@ -66,7 +66,10 @@ async def _get_faculty(db: AsyncSession, user_id: str) -> FacultyProfile:
 
 @router.on_event("startup")
 async def startup():
-    await _ensure_tables()
+    try:
+        await _ensure_tables()
+    except Exception as e:
+        logger.warning("Faculty development table auto-creation skipped: %s", e)
 
 
 @router.post("/complete", summary="Upload certificate and mark a course as completed")
