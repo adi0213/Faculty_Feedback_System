@@ -43,7 +43,7 @@ async def get_current_user(
     if not user_id:
         raise AuthenticationError("Malformed token payload")
 
-    result = await db.execute(select(User).where(User.id == user_id, User.is_active == True))
+    result = await db.execute(select(User).where(User.id == user_id, User.is_active.is_(True)))
     user = result.scalar_one_or_none()
     if not user:
         raise AuthenticationError("User account not found or inactive")

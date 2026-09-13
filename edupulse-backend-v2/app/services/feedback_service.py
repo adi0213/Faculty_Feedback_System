@@ -156,7 +156,7 @@ async def get_feedback_count(
         select(func.count(FeedbackRecord.id)).where(
             FeedbackRecord.faculty_profile_id == faculty_profile_id,
             FeedbackRecord.term == term,
-            FeedbackRecord.is_spam == False,
+            FeedbackRecord.is_spam.is_(False),
         )
     )
     return result.scalar() or 0

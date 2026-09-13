@@ -116,7 +116,7 @@ async def get_department_summary(
             dept=dept_name,
             college=college,
             faculty_count=len(faculties),
-            avg_composite=round(_safe_mean(composites), 2) if composites else None,
+            avg_composite=round(_safe_mean(composites) or 0.0, 2) if composites else None,
             strong_count=strong,
             developing_count=developing,
             needs_support_count=needs,
@@ -253,13 +253,13 @@ async def get_system_health(db: AsyncSession, university: str | None = None) -> 
     fac_result = await db.execute(fac_query)
     faculties = fac_result.scalars().all()
 
-    fb_count_result = await db.execute(select(func.count(SubmissionRecord.id)))
+    fb_count_result = await db.execute(select(func.count()).select_from(SubmissionRecord))
     total_fb = fb_count_result.scalar() or 0
 
     nlp_done_result = await db.execute(
-        select(func.count(FeedbackRecord.id)).where(FeedbackRecord.nlp_processed == True)
+        select(func.count()).select_from(FeedbackRecord).where(FeedbackRecord.nlp_processed.is_(True))
     )
-    nlp_total_result = await db.execute(select(func.count(FeedbackRecord.id)))
+    nlp_total_result = await db.execute(select(func.count()).select_from(FeedbackRecord))
     nlp_done = nlp_done_result.scalar() or 0
     nlp_total = nlp_total_result.scalar() or 0
 

@@ -30,16 +30,16 @@ class PseudoToken(Base):
         {"schema": "registry"},
     )
 
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    user_id = Column(String(36), ForeignKey("registry.users.id", ondelete="CASCADE"), nullable=False)
-    faculty_profile_id = Column(String(36), nullable=False)
-    term = Column(String(20), nullable=False)
+    id: str = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id: str = Column(String(36), ForeignKey("registry.users.id", ondelete="CASCADE"), nullable=False)
+    faculty_profile_id: str = Column(String(36), nullable=False)
+    term: str = Column(String(20), nullable=False)
 
     # SHA-256 hash of the HMAC token — stored for lookup, never the raw token
-    token_hash = Column(String(64), nullable=False, unique=True)
+    token_hash: str = Column(String(64), nullable=False, unique=True)
 
-    is_used = Column(Boolean, default=False, nullable=False)
-    created_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
-    used_at = Column(DateTime(timezone=True), nullable=True)
+    is_used: bool = Column(Boolean, default=False, nullable=False)
+    created_at: datetime = Column(DateTime(timezone=True), default=utcnow, nullable=False)
+    used_at: datetime | None = Column(DateTime(timezone=True), nullable=True)
 
     user = relationship("User", back_populates="issued_tokens")

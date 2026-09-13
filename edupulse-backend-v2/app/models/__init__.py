@@ -8,6 +8,7 @@ from app.models.token import PseudoToken
 from app.models.course_catalog import CourseCatalogEntry, CourseEmbedding
 from app.models.roadmap import CourseRecommendation, FacultyRoadmap
 from app.models.audit_log import AuditLog
+from app.models.course_completion import CourseCompletion
 
 __all__ = [
     "User",
@@ -20,4 +21,5 @@ __all__ = [
     "CourseRecommendation",
     "FacultyRoadmap",
     "AuditLog",
+    "CourseCompletion",
 ]

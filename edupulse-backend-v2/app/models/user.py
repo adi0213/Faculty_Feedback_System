@@ -31,31 +31,31 @@ class User(Base):
         {"schema": "registry"},
     )
 
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    role = Column(
+    id: str = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    role: str = Column(
         Enum("student", "faculty", "hod", "principal", "university", "admin",
              name="user_role_enum", schema="registry"),
         nullable=False,
         index=True,
     )
-    name = Column(String(200), nullable=False)
-    email = Column(String(320), nullable=False, unique=True)
-    hashed_password = Column(String(128), nullable=False)
-    is_active = Column(Boolean, default=True, nullable=False)
+    name: str = Column(String(200), nullable=False)
+    email: str = Column(String(320), nullable=False, unique=True)
+    hashed_password: str = Column(String(128), nullable=False)
+    is_active: bool = Column(Boolean, default=True, nullable=False)
 
     # Academic context
-    dept = Column(String(100), nullable=True)
-    semester = Column(Integer, nullable=True)
-    college = Column(String(200), nullable=True)
-    university = Column(String(200), nullable=True)
+    dept: str | None = Column(String(100), nullable=True)
+    semester: int | None = Column(Integer, nullable=True)
+    college: str | None = Column(String(200), nullable=True)
+    university: str | None = Column(String(200), nullable=True)
 
     # Student-specific: JSON array of faculty IDs enrolled with this term
-    enrolled_faculty_ids = Column(Text, nullable=True)  # JSON string
+    enrolled_faculty_ids: str | None = Column(Text, nullable=True)  # JSON string
 
     # Audit fields
-    created_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
-    updated_at = Column(DateTime(timezone=True), default=utcnow, onupdate=utcnow, nullable=False)
-    last_login_at = Column(DateTime(timezone=True), nullable=True)
+    created_at: datetime = Column(DateTime(timezone=True), default=utcnow, nullable=False)
+    updated_at: datetime = Column(DateTime(timezone=True), default=utcnow, onupdate=utcnow, nullable=False)
+    last_login_at: datetime | None = Column(DateTime(timezone=True), nullable=True)
 
     # Relationships
     issued_tokens = relationship("PseudoToken", back_populates="user", cascade="all, delete-orphan")

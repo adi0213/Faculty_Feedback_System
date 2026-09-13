@@ -41,6 +41,8 @@ def _get_upload_dir() -> Path:
     raise RuntimeError("Cannot create upload directory in any writable location")
 
 
+UPLOAD_DIR = _get_upload_dir()
+
 ALLOWED_TYPES = {"application/pdf", "image/jpeg", "image/png", "image/webp", "image/jpg"}
 ALLOWED_EXTENSIONS = {".pdf", ".jpg", ".jpeg", ".png", ".webp"}
 MAX_SIZE_MB = 10
@@ -50,11 +52,8 @@ MAX_TOTAL_BOOST = 0.5
 
 async def _ensure_tables():
     """Create course_completions table if it doesn't exist."""
-    try:
-        async with engine.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
-    except Exception as e:
-        logger.warning("Course completions schema initialization skipped: %s", e)
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
 
 
 async def _get_faculty(db: AsyncSession, user_id: str) -> FacultyProfile:
@@ -63,6 +62,14 @@ async def _get_faculty(db: AsyncSession, user_id: str) -> FacultyProfile:
     if not faculty:
         raise HTTPException(status_code=404, detail="Faculty profile not found")
     return faculty
+
+
+@router.on_event("startup")
+async def startup():
+    try:
+        await _ensure_tables()
+    except Exception as e:
+        logger.warning("Faculty development table auto-creation skipped: %s", e)
 
 
 @router.post("/complete", summary="Upload certificate and mark a course as completed")
@@ -79,6 +86,8 @@ async def complete_course(
     Faculty uploads a completion certificate for a recommended course.
     Each completion grants a +0.15 score boost (capped at +0.5 total).
     """
+    await _ensure_tables()
+
     # ── Validate file type & size ────────────────────────────────────────────
     ext = Path(certificate.filename or "").suffix.lower()
     if ext not in ALLOWED_EXTENSIONS:
@@ -109,16 +118,15 @@ async def complete_course(
             CourseCompletion.faculty_profile_id == faculty.id
         )
     )
-    current_boost = float(total_res.scalar() or 0.0)
+    current_boost = total_res.scalar() or 0.0
     if current_boost >= MAX_TOTAL_BOOST:
         boost = 0.0  # Already at cap — still mark as complete
     else:
         boost = min(BOOST_PER_COURSE, MAX_TOTAL_BOOST - current_boost)
 
     # ── Save file ────────────────────────────────────────────────────────────
-    upload_dir = _get_upload_dir()
     unique_name = f"{faculty.id}_{uuid.uuid4().hex}{ext}"
-    dest = upload_dir / unique_name
+    dest = UPLOAD_DIR / unique_name
     with open(dest, "wb") as f:
         f.write(content)
 
@@ -152,7 +160,7 @@ async def complete_course(
         "dimension_id": dimension_id,
         "certificate_url": cert_url,
         "score_boost": boost,
-        "total_boost_earned": round(float(current_boost + boost), 2),
+        "total_boost_earned": round(current_boost + boost, 2),
         "max_boost": MAX_TOTAL_BOOST,
         "completed_at": completion.completed_at.isoformat(),
     }
@@ -164,6 +172,7 @@ async def list_completed_courses(
     user=Depends(require_role("faculty")),
 ):
     """Returns all course completions for the logged-in faculty with total boost."""
+    await _ensure_tables()
     faculty = await _get_faculty(db, user.id)
 
     result = await db.execute(
@@ -173,7 +182,7 @@ async def list_completed_courses(
     )
     completions = result.scalars().all()
 
-    total_boost = round(float(sum(float(c.score_boost) for c in completions)), 2) if completions else 0.0
+    total_boost = round(sum(c.score_boost for c in completions), 2)
 
     return {
         "faculty_id": faculty.id,
@@ -203,6 +212,7 @@ async def delete_completion(
     user=Depends(require_role("faculty")),
 ):
     """Allows a faculty to remove an incorrectly uploaded completion."""
+    await _ensure_tables()
     faculty = await _get_faculty(db, user.id)
 
     result = await db.execute(
@@ -217,8 +227,7 @@ async def delete_completion(
 
     # Remove file from disk
     if completion.certificate_filename:
-        upload_dir = _get_upload_dir()
-        path = upload_dir / completion.certificate_filename
+        path = UPLOAD_DIR / completion.certificate_filename
         if path.exists():
             path.unlink()
 

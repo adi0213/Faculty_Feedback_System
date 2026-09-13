@@ -207,7 +207,7 @@ async def compute_faculty_scores(
         select(FeedbackRecord).where(
             FeedbackRecord.faculty_profile_id == faculty_profile_id,
             FeedbackRecord.term == term,
-            FeedbackRecord.is_spam == False,
+            FeedbackRecord.is_spam.is_(False),
         )
     )
     records: list[FeedbackRecord] = fb_result.scalars().all()

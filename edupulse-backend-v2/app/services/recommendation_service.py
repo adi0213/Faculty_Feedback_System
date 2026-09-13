@@ -71,7 +71,7 @@ async def generate_faculty_recommendations(
         select(FeedbackRecord.comment_raw, FeedbackRecord.topics_json).where(
             FeedbackRecord.faculty_profile_id == faculty_profile_id,
             FeedbackRecord.term == term,
-            FeedbackRecord.is_spam == False,
+            FeedbackRecord.is_spam.is_(False),
             FeedbackRecord.comment_raw.isnot(None),
         )
     )

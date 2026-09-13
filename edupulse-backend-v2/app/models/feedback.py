@@ -35,53 +35,53 @@ class FeedbackRecord(Base):
         {"schema": "feedback"},
     )
 
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    id: str = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
 
     # Anonymization: HMAC-derived token, one per (student, faculty, term)
-    student_token = Column(String(64), nullable=False)
+    student_token: str = Column(String(64), nullable=False)
 
-    faculty_profile_id = Column(
+    faculty_profile_id: str = Column(
         String(36),
         ForeignKey("feedback.faculty_profiles.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
     )
-    term = Column(String(20), nullable=False)  # e.g. "2025-S2"
-    course_code = Column(String(50), nullable=True)
+    term: str = Column(String(20), nullable=False)  # e.g. "2025-S2"
+    course_code: str | None = Column(String(50), nullable=True)
 
     # ── Structured scores (stored as JSON for flexibility) ────────────────
     # {"clarity": 4, "methodology": 2, "punctuality": 3, ...}  (1–4 scale)
-    scores_json = Column(Text, nullable=False)
+    scores_json: str = Column(Text, nullable=False)
 
     # Optional free-text comment (sanitized, max 1000 chars)
-    comment_raw = Column(Text, nullable=True)         # Original (sanitized) text
-    comment_language = Column(String(10), nullable=True)  # 'en' | 'ml' | 'mixed'
+    comment_raw: str | None = Column(Text, nullable=True)         # Original (sanitized) text
+    comment_language: str | None = Column(String(10), nullable=True)  # 'en' | 'ml' | 'mixed'
 
     # ── NLP analysis results ──────────────────────────────────────────────
-    sentiment_score = Column(Float, nullable=True)    # -1.0 to +1.0
-    sentiment_label = Column(String(20), nullable=True)  # positive|negative|neutral
+    sentiment_score: float | None = Column(Float, nullable=True)    # -1.0 to +1.0
+    sentiment_label: str | None = Column(String(20), nullable=True)  # positive|negative|neutral
 
     # Aspect-based sentiment: {"clarity": 0.8, "methodology": -0.5, ...}
-    absa_scores_json = Column(Text, nullable=True)
+    absa_scores_json: str | None = Column(Text, nullable=True)
 
     # Topics extracted from comment (JSON array of strings)
-    topics_json = Column(Text, nullable=True)
+    topics_json: str | None = Column(Text, nullable=True)
 
     # Dimensions flagged by comment (JSON array: ["clarity", "pacing"])
-    flagged_dimensions_json = Column(Text, nullable=True)
+    flagged_dimensions_json: str | None = Column(Text, nullable=True)
 
     # ── Quality flags ────────────────────────────────────────────────────
-    is_spam = Column(Boolean, default=False, nullable=False)
-    is_duplicate = Column(Boolean, default=False, nullable=False)
-    duplicate_of_id = Column(String(36), nullable=True)
-    is_constructive = Column(Boolean, default=True, nullable=False)
-    is_temporal_anomaly = Column(Boolean, default=False, nullable=False)
+    is_spam: bool = Column(Boolean, default=False, nullable=False)
+    is_duplicate: bool = Column(Boolean, default=False, nullable=False)
+    duplicate_of_id: str | None = Column(String(36), nullable=True)
+    is_constructive: bool = Column(Boolean, default=True, nullable=False)
+    is_temporal_anomaly: bool = Column(Boolean, default=False, nullable=False)
 
     # Processing status
-    nlp_processed = Column(Boolean, default=False, nullable=False)
-    nlp_processed_at = Column(DateTime(timezone=True), nullable=True)
+    nlp_processed: bool = Column(Boolean, default=False, nullable=False)
+    nlp_processed_at: datetime | None = Column(DateTime(timezone=True), nullable=True)
 
-    submitted_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
+    submitted_at: datetime = Column(DateTime(timezone=True), default=utcnow, nullable=False)
 
     # Relationships
     faculty = relationship("FacultyProfile", back_populates="feedback_records")
@@ -107,8 +107,8 @@ class SubmissionRecord(Base):
         {"schema": "feedback"},
     )
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    student_token = Column(String(64), nullable=False)
-    faculty_profile_id = Column(String(36), nullable=False)
-    term = Column(String(20), nullable=False)
-    submitted_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
+    id: int = Column(Integer, primary_key=True, autoincrement=True)
+    student_token: str = Column(String(64), nullable=False)
+    faculty_profile_id: str = Column(String(36), nullable=False)
+    term: str = Column(String(20), nullable=False)
+    submitted_at: datetime = Column(DateTime(timezone=True), default=utcnow, nullable=False)

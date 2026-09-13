@@ -36,32 +36,32 @@ class CourseCatalogEntry(Base):
         {"schema": "feedback"},
     )
 
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    title = Column(String(400), nullable=False)
-    provider = Column(String(100), nullable=False)   # NPTEL | SWAYAM | AICTE | UGC | IIT-X
-    institution = Column(String(200), nullable=True)  # e.g. IIT Madras
-    url = Column(Text, nullable=True)
-    description = Column(Text, nullable=False)
+    id: str = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    title: str = Column(String(400), nullable=False)
+    provider: str = Column(String(100), nullable=False)   # NPTEL | SWAYAM | AICTE | UGC | IIT-X
+    institution: str | None = Column(String(200), nullable=True)  # e.g. IIT Madras
+    url: str | None = Column(Text, nullable=True)
+    description: str = Column(Text, nullable=False)
 
     # Duration
-    duration_weeks = Column(Integer, nullable=True)
-    duration_label = Column(String(50), nullable=True)  # e.g. "8 weeks"
+    duration_weeks: int | None = Column(Integer, nullable=True)
+    duration_label: str | None = Column(String(50), nullable=True)  # e.g. "8 weeks"
 
     # Pedagogical targeting
-    primary_dimension = Column(String(50), nullable=True)  # clarity|methodology|pacing|...
-    secondary_dimensions_json = Column(Text, nullable=True)  # JSON array
+    primary_dimension: str | None = Column(String(50), nullable=True)  # clarity|methodology|pacing|...
+    secondary_dimensions_json: str | None = Column(Text, nullable=True)  # JSON array
 
     # Level and category
-    level = Column(String(20), nullable=True)   # beginner | intermediate | advanced
-    category = Column(String(100), nullable=True)  # e.g. "Pedagogy", "Subject Expertise"
+    level: str | None = Column(String(20), nullable=True)   # beginner | intermediate | advanced
+    category: str | None = Column(String(100), nullable=True)  # e.g. "Pedagogy", "Subject Expertise"
 
     # Outcome text (used in recommendations)
-    learning_outcomes_json = Column(Text, nullable=True)  # JSON array of outcomes
+    learning_outcomes_json: str | None = Column(Text, nullable=True)  # JSON array of outcomes
 
     # Metadata
-    is_active = Column(Boolean, default=True)
-    last_verified = Column(DateTime(timezone=True), nullable=True)
-    created_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
+    is_active: bool = Column(Boolean, default=True)
+    last_verified: datetime | None = Column(DateTime(timezone=True), nullable=True)
+    created_at: datetime = Column(DateTime(timezone=True), default=utcnow, nullable=False)
 
     # Relationship to embeddings
     embedding = relationship("CourseEmbedding", back_populates="course", uselist=False, cascade="all, delete-orphan")
@@ -79,8 +79,8 @@ class CourseEmbedding(Base):
     __tablename__ = "course_embeddings"
     __table_args__ = {"schema": "feedback"}
 
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    course_id = Column(
+    id: str = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    course_id: str = Column(
         String(36),
         ForeignKey("feedback.course_catalog.id", ondelete="CASCADE"),
         nullable=False,
@@ -88,12 +88,12 @@ class CourseEmbedding(Base):
     )
 
     # Embedding stored as JSON array (fallback when pgvector unavailable)
-    embedding_json = Column(Text, nullable=False)
+    embedding_json: str = Column(Text, nullable=False)
 
     # Embedding model used (for cache invalidation)
-    model_name = Column(String(100), nullable=False, default="tfidf-lightweight")
-    embedding_dim = Column(Integer, nullable=False, default=768)
+    model_name: str = Column(String(100), nullable=False, default="tfidf-lightweight")
+    embedding_dim: int = Column(Integer, nullable=False, default=768)
 
-    created_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
+    created_at: datetime = Column(DateTime(timezone=True), default=utcnow, nullable=False)
 
     course = relationship("CourseCatalogEntry", back_populates="embedding")

@@ -28,36 +28,36 @@ class CourseRecommendation(Base):
         {"schema": "feedback"},
     )
 
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    faculty_profile_id = Column(
+    id: str = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    faculty_profile_id: str = Column(
         String(36),
         ForeignKey("feedback.faculty_profiles.id", ondelete="CASCADE"),
         nullable=False,
     )
-    course_id = Column(
+    course_id: str | None = Column(
         String(36),
         ForeignKey("feedback.course_catalog.id", ondelete="SET NULL"),
         nullable=True,
     )
-    term = Column(String(20), nullable=False)
+    term: str = Column(String(20), nullable=False)
 
     # Why this recommendation was generated
-    target_dimension = Column(String(50), nullable=False)
-    evidence_json = Column(Text, nullable=False)      # JSON: list of supporting feedback quotes/themes
-    confidence_score = Column(Float, nullable=False)  # 0.0–1.0
-    similarity_score = Column(Float, nullable=True)   # cosine similarity to course
+    target_dimension: str = Column(String(50), nullable=False)
+    evidence_json: str = Column(Text, nullable=False)      # JSON: list of supporting feedback quotes/themes
+    confidence_score: float = Column(Float, nullable=False)  # 0.0–1.0
+    similarity_score: float | None = Column(Float, nullable=True)   # cosine similarity to course
 
     # LLM-generated justification
-    justification_text = Column(Text, nullable=True)
-    learning_outcomes_text = Column(Text, nullable=True)
-    expected_impact_text = Column(Text, nullable=True)
+    justification_text: str | None = Column(Text, nullable=True)
+    learning_outcomes_text: str | None = Column(Text, nullable=True)
+    expected_impact_text: str | None = Column(Text, nullable=True)
 
     # Status tracking
-    is_accepted = Column(Boolean, nullable=True)       # None = not reviewed
-    accepted_at = Column(DateTime(timezone=True), nullable=True)
-    completed_at = Column(DateTime(timezone=True), nullable=True)
+    is_accepted: bool | None = Column(Boolean, nullable=True)       # None = not reviewed
+    accepted_at: datetime | None = Column(DateTime(timezone=True), nullable=True)
+    completed_at: datetime | None = Column(DateTime(timezone=True), nullable=True)
 
-    created_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
+    created_at: datetime = Column(DateTime(timezone=True), default=utcnow, nullable=False)
 
     faculty = relationship("FacultyProfile", back_populates="recommendations")
     course = relationship("CourseCatalogEntry")
@@ -74,37 +74,37 @@ class FacultyRoadmap(Base):
         {"schema": "feedback"},
     )
 
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    faculty_profile_id = Column(
+    id: str = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    faculty_profile_id: str = Column(
         String(36),
         ForeignKey("feedback.faculty_profiles.id", ondelete="CASCADE"),
         nullable=False,
     )
-    faculty_id = Column(String(36), nullable=False)   # registry.users.id
-    term = Column(String(20), nullable=False)
+    faculty_id: str = Column(String(36), nullable=False)   # registry.users.id
+    term: str = Column(String(20), nullable=False)
 
     # Band and composite at time of generation
-    score_band = Column(String(20), nullable=False)
-    composite_score = Column(Float, nullable=False)
+    score_band: str = Column(String(20), nullable=False)
+    composite_score: float = Column(Float, nullable=False)
 
     # LLM-generated plan content (JSON structure)
-    day30_plan_json = Column(Text, nullable=False)    # {"goals": [...], "actions": [...]}
-    day60_plan_json = Column(Text, nullable=False)
-    day90_plan_json = Column(Text, nullable=False)
+    day30_plan_json: str = Column(Text, nullable=False)    # {"goals": [...], "actions": [...]}
+    day60_plan_json: str = Column(Text, nullable=False)
+    day90_plan_json: str = Column(Text, nullable=False)
 
     # Overall narrative
-    executive_summary = Column(Text, nullable=True)
-    root_cause_analysis = Column(Text, nullable=True)
+    executive_summary: str | None = Column(Text, nullable=True)
+    root_cause_analysis: str | None = Column(Text, nullable=True)
 
     # Progress tracking
-    progress_percent = Column(Integer, default=0)
-    last_reviewed_at = Column(DateTime(timezone=True), nullable=True)
+    progress_percent: int = Column(Integer, default=0)
+    last_reviewed_at: datetime | None = Column(DateTime(timezone=True), nullable=True)
 
-    is_published = Column(Boolean, default=False)     # Published to faculty portal
-    published_at = Column(DateTime(timezone=True), nullable=True)
+    is_published: bool = Column(Boolean, default=False)     # Published to faculty portal
+    published_at: datetime | None = Column(DateTime(timezone=True), nullable=True)
 
-    created_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
-    updated_at = Column(DateTime(timezone=True), default=utcnow, onupdate=utcnow, nullable=False)
+    created_at: datetime = Column(DateTime(timezone=True), default=utcnow, nullable=False)
+    updated_at: datetime = Column(DateTime(timezone=True), default=utcnow, onupdate=utcnow, nullable=False)
 
     faculty_profile = relationship("FacultyProfile", back_populates="roadmaps", foreign_keys=[faculty_profile_id])
     faculty_user = relationship(

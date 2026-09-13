@@ -65,7 +65,7 @@ async def process_feedback_record(db: AsyncSession, feedback_id: str) -> bool:
                     FeedbackRecord.term == record.term,
                     FeedbackRecord.id != record.id,
                     FeedbackRecord.comment_raw.isnot(None),
-                    FeedbackRecord.is_spam == False,
+                    FeedbackRecord.is_spam.is_(False),
                 )
             )
             existing_comments = [
