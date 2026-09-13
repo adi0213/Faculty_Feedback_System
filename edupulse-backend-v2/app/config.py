@@ -3,15 +3,19 @@ Application configuration using Pydantic Settings.
 All values are loaded from environment variables or a .env file.
 Never commit secrets — use .env.example as the template.
 """
+import os
 from functools import lru_cache
 from typing import Literal
-from pydantic import AnyUrl, Field, field_validator
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# Don't load .env file in production — use platform env vars (Render, Railway, etc.)
+_ENV_FILE = ".env" if os.environ.get("APP_ENV", "development") != "production" else None
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=_ENV_FILE,
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore",
@@ -30,14 +34,25 @@ class Settings(BaseSettings):
         return [o.strip() for o in self.app_allowed_origins.split(",")]
 
     # ── Database ─────────────────────────────────────────────────────────────
-    database_url: str = "postgresql+asyncpg://edupulse:edupulse123@localhost:5432/edupulse_v2"
+    database_url: str = "sqlite+aiosqlite:///./edupulse_v2.db"
     database_pool_size: int = 10
     database_max_overflow: int = 20
 
     @property
+    def async_database_url(self) -> str:
+        """Ensure asyncpg driver prefix for PostgreSQL URLs (Render gives plain postgresql://)."""
+        url = self.database_url
+        if url.startswith("postgresql://"):
+            url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
+        elif url.startswith("postgres://"):   # Some providers use this alias
+            url = url.replace("postgres://", "postgresql+asyncpg://", 1)
+        return url
+
+    @property
     def sync_database_url(self) -> str:
         """Synchronous URL for Alembic migrations."""
-        return self.database_url.replace("postgresql+asyncpg://", "postgresql+psycopg2://")
+        url = self.async_database_url
+        return url.replace("postgresql+asyncpg://", "postgresql+psycopg2://")
 
     # ── Redis ────────────────────────────────────────────────────────────────
     redis_url: str = "redis://localhost:6379/0"

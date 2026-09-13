@@ -16,7 +16,8 @@ from app.config import get_settings
 
 settings = get_settings()
 
-_is_sqlite = settings.database_url.startswith("sqlite")
+_db_url = settings.async_database_url   # converts postgresql:// → postgresql+asyncpg://
+_is_sqlite = _db_url.startswith("sqlite")
 
 _pool_kwargs: dict = {}
 if not _is_sqlite:
@@ -27,7 +28,7 @@ if not _is_sqlite:
     }
 
 engine = create_async_engine(
-    settings.database_url,
+    _db_url,
     echo=settings.app_env == "development",
     **_pool_kwargs,
 )
