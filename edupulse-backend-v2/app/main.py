@@ -50,6 +50,27 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning("Database schema auto-creation failed: %s", e)
 
+    # ── Auto-seed demo data on first boot (if DB is empty) ───────────────────
+    try:
+        from app.db.session import AsyncSessionLocal
+        from sqlalchemy import text as sql_text
+
+        async with AsyncSessionLocal() as session:
+            result = await session.execute(sql_text("SELECT COUNT(*) FROM registry.users"))
+            user_count = result.scalar()
+
+        if user_count == 0:
+            logger.info("Database is empty — running auto-seed...")
+            import sys, os
+            sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+            from seed_v2 import seed_only
+            await seed_only()
+            logger.info("Auto-seed completed — demo accounts ready")
+        else:
+            logger.info("Database already has %d users — skipping seed", user_count)
+    except Exception as e:
+        logger.warning("Auto-seed failed (non-fatal): %s", e)
+
     # ── Pre-warm RAG engine at startup ───────────────────────────────────────
     try:
         from app.ai.rag_engine import get_rag_engine

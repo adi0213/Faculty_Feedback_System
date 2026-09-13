@@ -257,6 +257,20 @@ async def seed_courses(session):
     print(f"  - Seeded {len(courses)} courses")
 
 
+async def seed_only():
+    """Seed demo data WITHOUT dropping tables. Safe to call from app startup."""
+    async with AsyncSessionLocal() as session:
+        await create_schemas(session)
+
+    async with AsyncSessionLocal() as session:
+        await seed_users(session)
+        faculty_pairs = await seed_faculty(session)
+        await seed_students(session, faculty_pairs)
+        await seed_feedback(session, faculty_pairs)
+        await seed_courses(session)
+        await session.commit()
+
+
 async def main():
     print("\n--- EduPulse v2 Database Seed Script ---")
     print("=" * 45)
@@ -290,3 +304,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
