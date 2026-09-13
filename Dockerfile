@@ -37,6 +37,10 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 # Copy backend application code
 COPY --chown=edupulse:edupulse edupulse-backend-v2/ .
 
+# Pre-create writable directories as edupulse user
+RUN mkdir -p uploads/certificates /tmp/edupulse/uploads/certificates \
+    && chown -R edupulse:edupulse uploads /tmp/edupulse
+
 USER edupulse
 
 EXPOSE 8000

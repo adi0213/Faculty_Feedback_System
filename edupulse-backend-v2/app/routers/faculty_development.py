@@ -25,8 +25,23 @@ from app.models.course_completion import CourseCompletion
 router = APIRouter(prefix="/faculty/courses", tags=["Faculty Development"])
 logger = logging.getLogger(__name__)
 
-UPLOAD_DIR = Path("uploads/certificates")
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+# Upload dir — prefer /tmp in containerised environments (read-only /app)
+_PREFERRED_UPLOAD_DIR = Path(os.environ.get("UPLOAD_DIR", "uploads/certificates"))
+_FALLBACK_UPLOAD_DIR  = Path("/tmp/edupulse/uploads/certificates")
+
+
+def _get_upload_dir() -> Path:
+    """Return a writable upload directory, falling back to /tmp on permission errors."""
+    for candidate in (_PREFERRED_UPLOAD_DIR, _FALLBACK_UPLOAD_DIR):
+        try:
+            candidate.mkdir(parents=True, exist_ok=True)
+            return candidate
+        except (PermissionError, OSError):
+            continue
+    raise RuntimeError("Cannot create upload directory in any writable location")
+
+
+UPLOAD_DIR = _get_upload_dir()
 
 ALLOWED_TYPES = {"application/pdf", "image/jpeg", "image/png", "image/webp", "image/jpg"}
 ALLOWED_EXTENSIONS = {".pdf", ".jpg", ".jpeg", ".png", ".webp"}

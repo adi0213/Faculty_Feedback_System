@@ -95,9 +95,20 @@ def create_app() -> FastAPI:
     app.include_router(admin.router, prefix=api_prefix)
 
     # ── Static files (uploaded certificates) ────────────────────────────────
-    uploads_dir = Path("uploads/certificates")
-    uploads_dir.mkdir(parents=True, exist_ok=True)
-    app.mount("/uploads/certificates", StaticFiles(directory=str(uploads_dir)), name="certificates")
+    _candidates = [Path("uploads/certificates"), Path("/tmp/edupulse/uploads/certificates")]
+    uploads_dir = None
+    for _d in _candidates:
+        try:
+            _d.mkdir(parents=True, exist_ok=True)
+            uploads_dir = _d
+            break
+        except (PermissionError, OSError):
+            continue
+    if uploads_dir:
+        app.mount("/uploads/certificates", StaticFiles(directory=str(uploads_dir)), name="certificates")
+    else:
+        logger.warning("Could not create uploads directory — certificate serving disabled")
+
 
     # ── Metrics ─────────────────────────────────────────────────────────────
     try:
